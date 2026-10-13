@@ -1,0 +1,59 @@
+name: Publish VPM package
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: vpm-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Load published versions
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p dist/vpm
+          gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/releases" > dist/releases.json
+      - name: Build and validate package
+        run: python3 tools/build_vpm.py --repository "$GITHUB_REPOSITORY" --history dist/releases.json
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag=$(jq -r .tag dist/vpm/build.json)
+          version=$(jq -r .version dist/vpm/build.json)
+          archive=$(jq -r .zip dist/vpm/build.json)
+          if gh release view "$tag" --json isDraft > dist/release.json 2>/dev/null; then
+            if [ "$(jq -r .isDraft dist/release.json)" = "true" ]; then
+              gh release upload "$tag" "$archive" dist/vpm/package.json --clobber
+              gh release edit "$tag" --draft=false --latest
+            else
+              mkdir -p dist/published
+              gh release download "$tag" --pattern "$(basename "$archive")" --dir dist/published
+              cmp "$archive" "dist/published/$(basename "$archive")"
+            fi
+          else
+            gh release create "$tag" "$archive" dist/vpm/package.json --target "$GITHUB_SHA" --title "PPTAvatarEditor $version" --notes-file RELEASE_NOTES.md --draft
+            gh release edit "$tag" --draft=false --latest
+          fi
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload repository listing
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/vpm/website
+      - name: Deploy repository listing
+        id: deployment
+        uses: actions/deploy-pages@v4

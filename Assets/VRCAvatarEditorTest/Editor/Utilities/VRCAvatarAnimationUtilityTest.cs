@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +6,9 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 using VRC.SDK3.Avatars.Components;
-using VRCAvatarEditor.Utilities;
+using PPTAvatarEditor.Utilities;
 
-namespace VRCAvatarEditor.Test
+namespace PPTAvatarEditor.Test
 {
     public class VRCAvatarAnimationUtilityTest
     {

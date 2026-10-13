@@ -54,6 +54,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+/dist/
 
 # VRCAvatarEditorTest以外は除く
 Assets/*

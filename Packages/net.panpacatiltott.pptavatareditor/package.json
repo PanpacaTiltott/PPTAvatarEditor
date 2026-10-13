@@ -1,0 +1,23 @@
+{
+  "name": "net.panpacatiltott.pptavatareditor",
+  "displayName": "PPTAvatarEditor",
+  "version": "0.0.0",
+  "unity": "2022.3",
+  "license": "Zlib",
+  "url": "https://github.com/PanpacaTiltott/PPTAvatarEditor/releases/download/v0.0.0/net.panpacatiltott.pptavatareditor-0.0.0.zip",
+  "documentationUrl": "https://github.com/PanpacaTiltott/PPTAvatarEditor#readme",
+  "changelogUrl": "https://github.com/PanpacaTiltott/PPTAvatarEditor/releases",
+  "description": "Edit VRChat avatar expressions and save animation clips. Based on VRCAvatarEditor 0.8.0.",
+  "author": {
+    "name": "PanpacaTiltott",
+    "url": "https://x.com/PanpacaTiltott"
+  },
+  "dependencies": {},
+  "gitDependencies": {},
+  "vpmDependencies": {
+    "com.vrchat.avatars": ">=3.2.0"
+  },
+  "legacyFolders": {},
+  "legacyFiles": {},
+  "type": "tool"
+}

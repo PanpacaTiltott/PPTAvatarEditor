@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-namespace VRCAvatarEditor.Test
+namespace PPTAvatarEditor.Test
 {
     [CreateAssetMenu(menuName = "TestAvatars")]
     public class TestAvatars : ScriptableObject

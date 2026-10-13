@@ -211,8 +211,8 @@
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       }
     },
-    "net.gatosyocora.vrcavatareditor": {
-      "version": "file:net.gatosyocora.vrcavatareditor",
+    "net.panpacatiltott.pptavatareditor": {
+      "version": "file:net.panpacatiltott.pptavatareditor",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

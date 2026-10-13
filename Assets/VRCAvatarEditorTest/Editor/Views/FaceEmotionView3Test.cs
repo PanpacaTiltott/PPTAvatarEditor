@@ -1,22 +1,22 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 using VRC.SDK3.Avatars.Components;
-using VRCAvatarEditor.Avatars3;
-using VRCAvatarEditor.Base;
-using VRCAvatarEditor.Interfaces;
+using PPTAvatarEditor.Avatars3;
+using PPTAvatarEditor.Base;
+using PPTAvatarEditor.Interfaces;
 
-namespace VRCAvatarEditor.Test
+namespace PPTAvatarEditor.Test
 {
     public class FaceEmotionView3Test
     {
         static List<Object> avatarPrefabs = TestUtility.GetTestAvatars().avatarPrefabs.ToList();
 
         private FaceEmotionView3 view;
-        private VRCAvatarEditorView parentWindow;
+        private PPTAvatarEditorView parentWindow;
         private AnimationsView3 animationsGUI;
 
         private IFaceEmotion mockFaceEmotion = new MockFaceEmotion();
@@ -27,7 +27,7 @@ namespace VRCAvatarEditor.Test
             TestUtility.OpenTestScene();
             TestUtility.CreateCacheFolder();
             view = ScriptableObject.CreateInstance<FaceEmotionView3>();
-            parentWindow = ScriptableObject.CreateInstance<VRCAvatarEditorView>();
+            parentWindow = ScriptableObject.CreateInstance<PPTAvatarEditorView>();
             animationsGUI = ScriptableObject.CreateInstance<AnimationsView3>();
         }
 
@@ -54,7 +54,7 @@ namespace VRCAvatarEditor.Test
             originalAvatar.AnimSavedFolderPath = TestUtility.CACHE_FOLDER_PATH;
 
             var editAvatar = new VRCAvatar3();
-            
+
             Assert.DoesNotThrow(() => view.OnCreateButtonClicked(originalAvatar, editAvatar, "testAnimation"));
         }
 
@@ -106,7 +106,7 @@ namespace VRCAvatarEditor.Test
                 throw new System.NotImplementedException();
             }
 
-            void IFaceEmotion.LoadAnimationProperties(FaceEmotionViewBase faceEmotionGUI, VRCAvatarEditorView editorGUI)
+            void IFaceEmotion.LoadAnimationProperties(FaceEmotionViewBase faceEmotionGUI, PPTAvatarEditorView editorGUI)
             {
                 throw new System.NotImplementedException();
             }

@@ -1,10 +1,10 @@
-﻿using System.IO;
+using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace VRCAvatarEditor.Test
+namespace PPTAvatarEditor.Test
 {
     public static class TestUtility
     {

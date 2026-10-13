@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="PPTAvatarEditorをVCCに追加。VRCAvatarEditor 0.8.0の改変版。">
+  <title>PPTAvatarEditor</title>
+  <style>
+    :root { color-scheme: light; --paper:#f0f4fa; --ink:#192c4a; --quiet:#596b85; --blue:#325fa6; --line:#d3dfed; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:"Yu Gothic UI","Hiragino Kaku Gothic ProN",Meiryo,sans-serif; line-height:1.65; }
+    main { width:min(680px,calc(100% - 40px)); margin:clamp(36px,12vh,128px) auto; }
+    .package { background:white; border-top:6px solid var(--blue); padding:clamp(24px,6vw,48px); border-radius:4px 4px 16px 16px; }
+    h1 { font-size:clamp(25px,5vw,36px); line-height:1.2; letter-spacing:-.025em; font-weight:650; margin:0 0 12px; overflow-wrap:anywhere; }
+    .version { margin:0 0 34px; color:var(--quiet); }
+    a { color:var(--blue); text-underline-offset:.2em; }
+    .add { display:flex; align-items:center; justify-content:center; gap:12px; background:var(--blue); color:white; padding:16px 20px; text-decoration:none; font-size:18px; font-weight:700; border-radius:7px; }
+    .add:hover { background:#254b88; }
+    .add svg { width:22px; height:22px; flex:none; }
+    label { display:block; margin:28px 0 8px; font-size:14px; font-weight:600; }
+    .url { display:flex; gap:8px; }
+    input { width:100%; min-width:0; border:1px solid var(--line); background:#f7f9fc; border-radius:5px; padding:11px; color:var(--ink); font:inherit; font-size:13px; }
+    button { flex:none; border:1px solid var(--line); background:white; color:var(--blue); border-radius:5px; padding:0 14px; font:inherit; cursor:pointer; }
+    :focus-visible { outline:3px solid #87a9df; outline-offset:4px; }
+    details { margin-top:18px; color:var(--quiet); font-size:14px; }
+    summary { cursor:pointer; width:fit-content; }
+    details p { margin-bottom:0; }
+    nav { display:flex; gap:24px; margin-top:32px; }
+    footer { margin:24px 0 0; color:var(--quiet); font-size:13px; }
+    footer p { margin:5px 0; }
+    #copy-status { font-size:13px; min-height:1.6em; color:var(--quiet); margin-top:4px; }
+    @media(max-width:400px) { .url { flex-direction:column; } button { padding:9px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="package" aria-labelledby="title">
+      <h1 id="title">PPTAvatarEditor</h1>
+      <p class="version">Version <span id="version">0.0.0</span></p>
+      <a class="add" id="add" href="vcc://vpm/addRepo?url=https%3A%2F%2Fpanpacatiltott.github.io%2FPPTAvatarEditor%2Findex.json">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg>
+        VCCに追加
+      </a>
+      <label for="repo-url">リポジトリURL</label>
+      <div class="url">
+        <input id="repo-url" readonly value="https://panpacatiltott.github.io/PPTAvatarEditor/index.json" spellcheck="false">
+        <button type="button" id="copy">コピー</button>
+      </div>
+      <div id="copy-status" role="status" aria-live="polite"></div>
+      <details>
+        <summary>手動で追加</summary>
+        <p>VCCの「Settings」「Packages」「Add Repository」でリポジトリURLを入力します。</p>
+      </details>
+      <nav aria-label="関連リンク">
+        <a href="https://github.com/PanpacaTiltott/PPTAvatarEditor">GitHub</a>
+        <a href="https://github.com/PanpacaTiltott/PPTAvatarEditor/releases">リリース</a>
+      </nav>
+    </section>
+    <footer>
+      <p>VRCAvatarEditor 0.8.0の改変版</p>
+      <p>原作者 gatosyocora ／ 改変 <a href="https://x.com/PanpacaTiltott">PanpacaTiltott</a></p>
+      <p>Copyright (C) 2019 gatosyocora</p>
+      <p><a href="LICENSE.txt">Zlib License</a> ／ <a href="USING_SOFTWARE_LICENSES.txt">同梱ソフトウェアのライセンス</a></p>
+    </footer>
+  </main>
+  <script>
+    document.getElementById('copy').addEventListener('click', async () => {
+      const input = document.getElementById('repo-url');
+      const status = document.getElementById('copy-status');
+      try {
+        await navigator.clipboard.writeText(input.value);
+        status.textContent = 'コピーしました';
+      } catch {
+        input.focus();
+        input.select();
+        status.textContent = 'URLを選択しました。コピーしてください。';
+      }
+    });
+  </script>
+</body>
+</html>

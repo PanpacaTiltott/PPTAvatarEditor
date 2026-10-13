@@ -1,0 +1,193 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebd0683dd7227cdac1871645e9dc5395, type: 3}
+  m_Name: EN
+  m_EditorClassIdentifier:
+  avatarSettings: "Avatar settings"
+  autoDetect: "Auto Detect"
+  allCategory: "All"
+  uncategorized: "Uncategorized"
+  undoPreview: "Undo"
+  redoPreview: "Redo"
+  undoHint: "Undo (Ctrl+Z)"
+  redoHint: "Redo (Ctrl+Y / Ctrl+Shift+Z)"
+  clearSearch: "Clear search"
+  nonzeroOnly: "Nonzero"
+  nonzeroHint: "Show only shapes with nonzero weights"
+  clipName: "Clip name"
+  saveOptions: "Save location / FX assignment"
+  assetsFolderOnly: "Choose a folder inside this project's Assets directory."
+  itemCount: "{0} items"
+  selectAll: "Select all"
+  selectAllHint: "Include or exclude all shapes on this mesh when saving."
+  selectForExport: "Select shapes to save"
+  noMatchingShapes: "No matching BlendShapes. Change the search or filters."
+  includeInClip: "Save this shape when the mesh is expanded"
+  previewTitle: "Preview"
+  frontView: "Front view"
+  previewZoom: "Zoom"
+  previewHeight: "Height"
+  previewHint: "Drag to rotate / Scroll to zoom"
+  previewSizeHint: "The preview resizes with the window and the divider."
+  assignClipToFx: "Assign the saved clip to an FX state"
+  standaloneClipHint: "Save a .anim clip for use in FaceEmo or other expression tools."
+  fxLayerTitle: "FX Layer"
+  layerLabel: "Layer"
+  stateLabel: "State"
+  saveAndAssign: "Save & assign"
+  saveClip: "Save .anim"
+  clipSaved: "Expression clip saved"
+  chooseAvatar: "Select an avatar"
+  avatarActions: "Avatar actions"
+  back: "Back"
+  avatarPrompt: "Select the avatar to edit in the Avatar field above."
+  layoutHint: "Drag the divider to resize the panels."
+  propertiesLabel: "BlendShapes"
+  loadProperties: "Load selected"
+  loadAnimationTitle: "Load expression clip"
+  infoDescription: "Edit VRChat avatar expressions and save animation clips."
+  infoEditingTitle: "Editing expressions"
+  infoEditingGuide: "Selecting an avatar opens the expression editor. Categories come from headings such as ---EYE--- in the Body mesh. Expand other meshes to edit their shapes."
+  infoFxGuide: "Select an FX layer at the lower left, then use Edit to load a clip into the preview."
+  infoHistoryGuide: "Use Ctrl+Z to undo and Ctrl+Y / Ctrl+Shift+Z to redo (Command on Mac). Text fields keep their own editing shortcuts."
+  infoSavingGuide: "All meshes start with their shapes checked. Only checked, non-excluded shapes in expanded meshes are saved to a .anim clip. Collapsed meshes are not saved. The default folder is Assets/PPAE/<avatar name>/. Change the destination or FX assignment in the save options below."
+  infoContact: "Developer / Contact"
+  openContact: "Open X"
+  sourceCode: "GitHub"
+  infoLicenseTitle: "Credits and licenses"
+  infoLicenseNotice: "Modified version of {0}\nOriginal author gatosyocora / Modifications PanpacaTiltott\nCopyright (C) 2019 gatosyocora\nZlib License"
+  upstreamRepository: "Original VRCAvatarEditor repository"
+  originalLicense: "Zlib License (original)"
+  thirdPartyLicense: "Third-party software licenses"
+  readmeTitle: "README / Instructions"
+  sortOriginal: "Mesh order"
+  sortAlphabetical: "Name order"
+  reset: Reset
+  open: Open
+  close: Close
+  edit: Edit
+  selectFolder: Select Folder
+  selectFolderDialogMessageText: Select Folder
+  exclusions: Exclusions
+  select: Select
+  ok: OK
+  cancel: Cancel
+  add: Add
+  remove: Remove
+  autoFix: Auto Fix
+  toggleAll: Toggle All
+  avatarLabel: Avatar
+  reloadAvatarButtonText: Reload Avatar
+  toolInfoButtonText: Tool Info
+  settingButtonText: Setting
+  resetPoseButtonText: Reset Pose
+  uploadAvatarButtonText: Upload Avatar
+  localIsLatestMessageText: VRCAvatarEditor <LocalVersion> is latest.
+  remoteIsLatestMessageText: 'Avalable new Version (Current: <LocalVersion>, Latest:
+    <RemoteVersion>).'
+  downloadLatestButtonText: Download latest
+  checkVersionDialogTitle: Check version
+  avatarInfoTitle: AvatarInfo
+  faceEmotionTitle: FaceEmotion
+  probeAnchorTitle: ProbeAnchor
+  boundsTitle: Bounds
+  shaderTitle: Shader
+  standingTabText: Standing
+  sittingTabText: Sitting
+  emoteButtonText: Emote
+  faceAndHandButtonText: Face&Hand
+  standingTitle: StandingAnims
+  sittingTitle: SittingAnims
+  noAvatarMessageText: Select No Avatar
+  noCustomStandingAnimsMessageText: Set to No CustomStandingAnims
+  noCustomSittingAnimsMessageText: Set to No CustomSittingAnims
+  createCustomStandingAnimsButtonText: Create CustomStandingAnims
+  createCustomSittingAnimsButtonText: Create CustomSittingAnims
+  setToSameAsCustomStandingAnimsButtonText: Set to same as CustomStandingAnims
+  existMissingPathMessageText: Exist Missing Path in AnimationClip
+  failAutoFixMissingPathMessageText: Failed Auto Fix. Please Fix manually or Recreate
+    AnimationClip.
+  haveNoAnimationClipMessageText: Have No AnimationClip
+  genderLabel: Gender
+  uploadStatusLabel: Upload Status
+  newAvatarText: New Avatar
+  uploadedAvatarText: Uploaded Avatar
+  customStandingAnimsLabel: CustomStandingAnims
+  customSittingAnimsLabel: CustomSittingAnims
+  triangleCountLabel: TriangleCount
+  heightLabel: Height
+  faceMeshLabel: FaceMesh
+  viewPositionLabel: View Position
+  lipSyncWarningMessageText: LipSync may not be set correctly
+  lipSyncTypeLabel: LipSync Type
+  lipSyncBlendShapesLabel: LipSync Blendshapes
+  lipSyncBlendShapesAutoDetectButtonText: Auto Detect Blendshapes for LipSync
+  loadAnimationButtonText: Load Animation
+  setToDefaultButtonText: Set to Default
+  resetToDefaultButtonText: Reset to Default
+  toggleAllLabel: ToggleAll
+  minButtonText: Min
+  maxButtonText: Max
+  animClipFileNameLabel: AnimClip FileName
+  animClipSaveFolderLabel: AnimClip SaveFolder
+  animationOverrideLabel: AnimationOverride
+  handPoseAnimClipLabel: HandPose AnimClip
+  createAnimFileButtonText: Create AnimFile
+  setToDefaultDialogTitleText: Default FaceEmotion Setting
+  setToDefaultDialogMessageText: Would you like to default your current FaceEmotion?
+  createOnlyMessageText: Create Only (not set to AnimatorController) because exist
+    no states in this layer.
+  handPoseChangeFailedMessageText: HandPose Animation can't be chaged because not
+    found target layer or state.
+  missingGestureControllerMessageText: No Gesture Layer Controller
+  createGestureControllerText: Create Gesture Layer Controller
+  setLeftAndRightHandLayerText: Set to Left & Right Hand Layer
+  missingFxControllerMessageText: No Fx Layer Controller
+  createFxControllerText: Create Fx Layer Controller
+  setToSkinnedMeshRendererLabel: Set to SkinnedMeshRenderer
+  setToMeshRendererLabel: Set to MeshRenderer
+  targetPositionLabel: Target Position
+  rendererListLabel: RendererList
+  probeAnchorMessageText: The Probe Anchor of the checked mesh is set.
+  setProbeAnchorButtonText: Set ProbeAnchor
+  resetToBoundsToPrefabButtonText: Revert Bounds
+  childObjectsLabel: Parent of ignore objects
+  setBoundsButtonText: Set Bounds
+  duplicateSelectedButtonText: Duplicate selected
+  optimizeSelectedButtonText: Optimize selected
+  useInspectorMessageText: Material property can edit in inspector
+  replaceShaderButtonText: Replace Shader
+  noSelectionText: No Selection
+  multipleText: Multiple Shaders
+  versionLabel: Version
+  openOnlineManualButtonText: Open OnlineManual
+  functionsLabel: Functions
+  readmeLabel: Readme
+  licenseLabel: License
+  usingSoftwareLicenseLabel: Using Software License
+  settingPageMessageText: The setting will be applied after the change is made and
+    until the window is closed. "Save Setting" will be applied after next time.
+  saveSettingButtonText: Save Setting
+  changeDefaultSettingButtonText: Default Setting
+  defaultCameraDistanceLabel: Default Camera Distance
+  faceCameraDistanceLabel: Face Camera Distance
+  cameraZoomStepDistanceLabel: Camera Zoom Step Distance
+  gammaCorrectionLabel: Gamma Correction
+  monitorBackgroundColorLabel: Monitor BackgroundColor
+  monitorSizeTypeLabel: MonitorSize
+  monitorSizeLabel: CustomSize
+  sortTypeLabel: SortType
+  blendShapeExclusionsLabel: Blendshape Exclusions
+  usePreviousAnimationOnHandAnimationLabel: Use Previous Animation on HandAnimation
+  otherLabel: Other
+  layoutTypeLabel: LayoutType
+  languageLabel: Language

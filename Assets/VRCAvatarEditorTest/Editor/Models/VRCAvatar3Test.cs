@@ -1,13 +1,13 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using VRC.SDK3.Avatars.Components;
-using VRCAvatarEditor.Avatars3;
+using PPTAvatarEditor.Avatars3;
 
-namespace VRCAvatarEditor.Test
+namespace PPTAvatarEditor.Test
 {
     public class VRCAvatar3Test
     {
