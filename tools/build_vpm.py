@@ -76,7 +76,10 @@ def build(output, repository, history):
     if manifest["url"] != expected_url:
         raise ValueError(f"Set package.json url to {expected_url}")
 
-    files = sorted(p for p in PACKAGE_ROOT.rglob("*") if p.is_file())
+    files = sorted(
+        (p for p in PACKAGE_ROOT.rglob("*") if p.is_file()),
+        key=lambda p: p.relative_to(PACKAGE_ROOT).parts,
+    )
     guids = set()
     for path in files:
         if path.is_symlink() or path.suffix not in ALLOWED_EXTENSIONS:
