@@ -41,7 +41,11 @@ Unity 2022.3.22f1、VRChat SDK3 Avatarsで動作確認しています。
 
 Copyright (C) 2019 gatosyocora
 
-Zlib Licenseで配布します。元の著作権表示とライセンス全文は [LICENSE.txt](LICENSE.txt) に変更せず保持しています。改変元と改変者を上記に明記し、同梱ソフトウェアのライセンスも保持しています。
+原作と、PanpacaTiltottによる変更・追加部分の両方をZlib Licenseで配布します。
+
+元の著作権表示とライセンス全文は [LICENSE.txt](LICENSE.txt) に変更せず保持しています。変更・追加部分は Copyright (C) 2026 PanpacaTiltott とし、[MODIFICATIONS_LICENSE.txt](MODIFICATIONS_LICENSE.txt) にZlibライセンス全文を記載しています。この許諾は既存の0.0.0の変更・追加部分にも適用します。
+
+同梱する第三者コードには、それぞれの著作権表示とライセンスが引き続き適用されます。[同梱ソフトウェアのライセンス](Packages/net.panpacatiltott.pptavatareditor/USING_SOFTWARE_LICENSES.txt) も保持しています。
 
 ツール内の「ツール情報」でも、改変元・改変者・著作権表示とライセンス原文を確認できます。
 

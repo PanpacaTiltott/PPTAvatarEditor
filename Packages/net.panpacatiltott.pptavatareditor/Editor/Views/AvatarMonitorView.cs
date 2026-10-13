@@ -22,7 +22,6 @@ namespace PPTAvatarEditor
 
         private Light sceneLight;
 
-        private Texture upDownTexture;
         private Material gammaMat;
 
         public enum MonitorSize
@@ -49,8 +48,6 @@ namespace PPTAvatarEditor
         public void Initialize(PPTAvatarEditorView.ToolFunc currentTool)
         {
             this.currentTool = currentTool;
-
-            upDownTexture = Resources.Load<Texture>("PPAE/Icon/UpDown");
 
             avatarMonitorField = new AvatarMonitorField();
 

@@ -55,6 +55,12 @@ sysinfo.txt
 *.apk
 *.unitypackage
 /dist/
+__pycache__/
+
+# Local verification helpers are not product sources.
+/tools/Compare-UnityExports.cs
+/tools/Verify-UnityWorkspace.cs
+/tools/Verify-WorkspaceLayout.cs
 
 # VRCAvatarEditorTest以外は除く
 Assets/*

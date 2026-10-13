@@ -1,18 +1,16 @@
-# PPTAvatarEditor 0.0.0
+# PPTAvatarEditor 0.0.1
 
 [VCCに追加](https://panpacatiltott.github.io/PPTAvatarEditor/)
 
-VRCAvatarEditor 0.8.0を元にした、PPTAvatarEditorの初回リリースです。
+変更・追加部分もZlib Licenseであることを、GitHub、同梱文書、ツール情報に明記しました。この許諾は0.0.0の変更・追加部分にも適用します。
 
-- 表情編集を初期画面にし、プレビュー・FX一覧・シェイプキーの配置を変更。
-- プレビューとFX一覧の境界をドラッグしてサイズを調整。
-- Bodyの見出しからのカテゴリ生成、名前検索、「0 以外」の絞り込みを追加。
-- シェイプキー操作のUndo / Redoを追加。
-- 初期保存先を `Assets/PPAE/アバター名/` に変更。
-- 補助機能を「アバター設定」に集約し、日本語を初期設定に変更。
-- 本家と別パッケージで共存。
+- 元のZlibライセンス原文と、同梱ソフトウェア2件のMITライセンス表記を保持。
+- 未使用の通信補助コードと、旧UIの照明・上下操作アイコンを削除。
+- ライセンス原文の改変や未追跡ファイルの混入を配布ビルドで検出。
 
-Unity 2022.3.22f1 / VRChat SDK3 Avatarsで検証。41項目のUI検証を通過し、同じ出力条件で本家と14ケースのクリップ出力がバイト単位で一致しています。
+表情編集・クリップ出力の処理は変更していません。
 
 PPTAvatarEditorはgatosyocora氏のVRCAvatarEditor 0.8.0をPanpacaTiltottが改変したものです。
-Copyright (C) 2019 gatosyocora。Zlib License。元のライセンス全文と同梱ソフトウェアのライセンスを保持しています。
+Copyright (C) 2019 gatosyocora。
+変更・追加部分 Copyright (C) 2026 PanpacaTiltott。
+原作・変更部分ともにZlib License。同梱の第三者コードにはそれぞれのライセンスが適用されます。

@@ -162,7 +162,8 @@ namespace PPTAvatarEditor
             saveFolder = "Assets/";
 
 
-            licenseText = FileUtility.GetFileTexts(editorFolderPath + LICENSE_FILE_NAME);
+            licenseText = FileUtility.GetFileTexts(editorFolderPath + LICENSE_FILE_NAME)
+                + "\n\n" + FileUtility.GetFileTexts(editorFolderPath + "MODIFICATIONS_LICENSE.txt");
             usingSoftwareLicenseText = FileUtility.GetFileTexts(editorFolderPath + USING_SOFTWARE_FILE_NAME);
 
             avatarMonitorGUI = ScriptableObject.CreateInstance<AvatarMonitorView>();

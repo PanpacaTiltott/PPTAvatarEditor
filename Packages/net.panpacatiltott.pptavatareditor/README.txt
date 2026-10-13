@@ -1,4 +1,4 @@
-PPTAvatarEditor 0.0.0
+PPTAvatarEditor 0.0.1
 
 VRChatアバターの表情を編集し、アニメーションクリップに保存。
 
@@ -17,6 +17,9 @@ GitHub https://github.com/PanpacaTiltott/PPTAvatarEditor
 PPTAvatarEditor は VRCAvatarEditor 0.8.0 の改変版です。
 原作者 gatosyocora ／ 改変 PanpacaTiltott
 Copyright (C) 2019 gatosyocora
-Zlib License
+変更・追加部分 Copyright (C) 2026 PanpacaTiltott
+原作・変更部分ともに Zlib License
 
-ライセンス全文は LICENSE.txt、同梱ソフトウェアのライセンスは USING_SOFTWARE_LICENSES.txt を参照してください。
+原作のライセンス全文は LICENSE.txt、変更・追加部分は MODIFICATIONS_LICENSE.txt を参照してください。
+変更・追加部分のZlib許諾は0.0.0にも適用します。
+第三者コードには個別のライセンスが引き続き適用されます。USING_SOFTWARE_LICENSES.txt を参照してください。

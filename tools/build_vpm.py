@@ -4,6 +4,7 @@ import hashlib
 import json
 import re
 import shutil
+import subprocess
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -15,6 +16,10 @@ ROOT = Path(__file__).resolve().parents[1]
 PACKAGE_ROOT = ROOT / "Packages" / PACKAGE
 TEXT_EXTENSIONS = {".cs", ".meta", ".asmdef", ".asset", ".shader", ".anim", ".txt", ".json", ".url"}
 ALLOWED_EXTENSIONS = TEXT_EXTENSIONS | {".png"}
+UPSTREAM_NOTICE_HASHES = {
+    "LICENSE.txt": "19c90dc0fb58c2d243837c75c501524efa2b5f4d2dfaa9149ffc1d8f8327650c",
+    "USING_SOFTWARE_LICENSES.txt": "75c3e10a9e57382a773e9061121c5bdb0d2e1ece7349fae1d28e9801d36d43d4",
+}
 
 
 def package_bytes(path):
@@ -67,8 +72,14 @@ def build(output, repository, history):
         raise ValueError("zipSHA256 belongs in the listing, not the package itself")
     if package_bytes(ROOT / "LICENSE.txt") != package_bytes(PACKAGE_ROOT / "LICENSE.txt"):
         raise ValueError("Original license notice must be retained unchanged")
-    if not (PACKAGE_ROOT / "USING_SOFTWARE_LICENSES.txt").is_file():
-        raise ValueError("Bundled software notices are missing")
+    for name, expected in UPSTREAM_NOTICE_HASHES.items():
+        if hashlib.sha256(package_bytes(PACKAGE_ROOT / name)).hexdigest() != expected:
+            raise ValueError(f"Upstream license notice changed or missing: {name}")
+    modifications = package_bytes(PACKAGE_ROOT / "MODIFICATIONS_LICENSE.txt")
+    if modifications != package_bytes(ROOT / "MODIFICATIONS_LICENSE.txt"):
+        raise ValueError("Modification license notices differ")
+    if b"Copyright (C) 2026 PanpacaTiltott" not in modifications or b"The zlib License" not in modifications:
+        raise ValueError("PPTAvatarEditor modifications must retain their Zlib notice")
 
     tag = "v" + version
     filename = f"{PACKAGE}-{version}.zip"
@@ -80,8 +91,13 @@ def build(output, repository, history):
         (p for p in PACKAGE_ROOT.rglob("*") if p.is_file()),
         key=lambda p: p.relative_to(PACKAGE_ROOT).parts,
     )
+    tracked = set(subprocess.check_output(
+        ["git", "-C", str(ROOT), "ls-files", "-z", "--", str(PACKAGE_ROOT.relative_to(ROOT)).replace("\\", "/")],
+    ).decode("utf-8").rstrip("\0").split("\0"))
     guids = set()
     for path in files:
+        if path.relative_to(ROOT).as_posix() not in tracked:
+            raise ValueError(f"Untracked file must not enter a release: {path.relative_to(PACKAGE_ROOT)}")
         if path.is_symlink() or path.suffix not in ALLOWED_EXTENSIONS:
             raise ValueError(f"Unexpected package file: {path.relative_to(PACKAGE_ROOT)}")
         if path.suffix == ".meta":
@@ -133,7 +149,7 @@ def build(output, repository, history):
     html = re.sub(r'(<span id="version">)[^<]+', lambda m: m[1] + version, html)
     (website / "index.html").write_text(html, encoding="utf-8", newline="\n")
     (website / ".nojekyll").touch()
-    for notice in ("LICENSE.txt", "USING_SOFTWARE_LICENSES.txt"):
+    for notice in ("LICENSE.txt", "MODIFICATIONS_LICENSE.txt", "USING_SOFTWARE_LICENSES.txt"):
         shutil.copyfile(PACKAGE_ROOT / notice, website / notice)
     metadata = {"version": version, "tag": tag, "zip": str(archive_path), "zipSHA256": digest,
                 "files": len(files), "guids": len(guids), "listingUrl": listing_url}

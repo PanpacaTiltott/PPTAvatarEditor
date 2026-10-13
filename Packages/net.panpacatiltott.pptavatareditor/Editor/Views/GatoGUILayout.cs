@@ -10,11 +10,6 @@ namespace PPTAvatarEditor
         private static float sliderPos;
         #endregion
 
-        #region LightRotater Variable
-        private static Texture lightActiveTex = Resources.Load<Texture>("PPAE/Icon/Sun_ON");
-        private static Texture lightInactiveTex = Resources.Load<Texture>("PPAE/Icon/Sun_OFF");
-        #endregion
-
         public static float VerticalSlider(Texture texture, float texSize, float height, float value, float minValue, float maxValue)
         {
             sliderPos = value / (maxValue + minValue);
@@ -118,31 +113,6 @@ namespace PPTAvatarEditor
                     type = (int)e.type;
                     return e.delta;
                 }
-            }
-
-            return Vector2.zero;
-        }
-
-        public static Vector2 LightRotater(float width, float height, ref bool isPressing)
-        {
-            var rect = GUILayoutUtility.GetRect(width, height, GUI.skin.box);
-
-            GUI.DrawTexture(rect, lightActiveTex, ScaleMode.ScaleToFit, true, 0);
-
-            var e = Event.current;
-
-            if (rect.Contains(e.mousePosition) && e.type == EventType.MouseDown)
-            {
-                isPressing = true;
-            }
-            else if (isPressing && e.type == EventType.MouseUp)
-            {
-                isPressing = false;
-            }
-
-            if (e.type == EventType.MouseDrag && isPressing)
-            {
-                return e.delta;
             }
 
             return Vector2.zero;
