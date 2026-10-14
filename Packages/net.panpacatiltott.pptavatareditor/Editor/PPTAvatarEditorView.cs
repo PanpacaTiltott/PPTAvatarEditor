@@ -132,7 +132,7 @@ namespace PPTAvatarEditor
         #endregion
 
 
-        [MenuItem("PPAE/Editor")]
+        [MenuItem("PPAE/Editor", false, 10)]
         public static void Create()
         {
             var window = GetWindow<PPTAvatarEditorView>("PPAE");

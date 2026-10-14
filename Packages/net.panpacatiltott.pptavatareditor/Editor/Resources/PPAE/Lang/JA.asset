@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: JA
   m_EditorClassIdentifier:
   avatarSettings: "アバター設定"
+  confirmPreview: "確認"
+  playPreview: "再生"
+  pausePreview: "一時停止"
+  allFxLayers: "すべてのレイヤー"
   autoDetect: "自動検出"
   allCategory: "すべて"
   uncategorized: "未分類"

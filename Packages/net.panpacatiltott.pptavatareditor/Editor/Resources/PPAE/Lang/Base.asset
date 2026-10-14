@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Base
   m_EditorClassIdentifier:
   avatarSettings: "Avatar settings"
+  confirmPreview: "Preview"
+  playPreview: "Play"
+  pausePreview: "Pause"
+  allFxLayers: "All layers"
   autoDetect: "Auto Detect"
   allCategory: "All"
   uncategorized: "Uncategorized"

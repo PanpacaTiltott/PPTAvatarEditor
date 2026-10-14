@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: KO
   m_EditorClassIdentifier:
   avatarSettings: "아바타 설정"
+  confirmPreview: "확인"
+  playPreview: "재생"
+  pausePreview: "일시 정지"
+  allFxLayers: "모든 레이어"
   autoDetect: "자동 감지"
   allCategory: "전체"
   uncategorized: "미분류"

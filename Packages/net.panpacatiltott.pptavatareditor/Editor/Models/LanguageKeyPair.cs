@@ -144,6 +144,10 @@ namespace PPTAvatarEditor
         public string languageLabel;
 
         [Header("PPAE Workspace")]
+        public string confirmPreview;
+        public string playPreview;
+        public string pausePreview;
+        public string allFxLayers;
         public string allCategory;
         public string uncategorized;
         public string undoPreview;
