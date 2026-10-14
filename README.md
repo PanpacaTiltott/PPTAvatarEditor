@@ -25,7 +25,7 @@ https://panpacatiltott.github.io/PPTAvatarEditor/index.json
 
 ## 追加機能
 
-- **FX Viewer** — 「PPAE → FX Viewer」から開く確認用ウィンドウ。左にプレビュー、右にFX一覧を表示し、「確認」でクリップを再生します。再生位置も調整できます。
+- **FX Viewer** — 「PPAE → FX Viewer」から表情を確認・差し替えできます。クリップ欄へのドラッグ＆ドロップや選択でFXの割り当てを変更し、「確認」で再生します。差し替えはUndo / Redoに対応し、Blend Tree内のクリップやOverride Controllerも扱えます。
 - **シェイプキーのUndo / Redo** — 値の調整、保存チェック、クリップの読み込み、リセットを戻したりやり直したりできます。
 - **Bodyの見出しからカテゴリを生成** — `---EYE---` など、アバターに付いた区切り名で分類。「未分類」は末尾に表示します。
 - **名前検索** — シェイプキーを名前で絞り込めます。

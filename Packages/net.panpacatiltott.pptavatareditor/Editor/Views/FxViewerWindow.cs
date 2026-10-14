@@ -13,6 +13,7 @@ namespace PPTAvatarEditor
         [SerializeField] private float previewFraction = .5f;
         private AvatarMonitorView preview;
         private FxViewerCatalog catalog;
+        private FxViewerCatalog.Entry selectedEntry;
         private FxClipPreview playback;
         private Vector2 scroll;
         private int layer, dragMode;
@@ -60,6 +61,7 @@ namespace PPTAvatarEditor
             EditorApplication.playModeStateChanged += PlayStateChanged;
             EditorApplication.update += Tick;
             EditorApplication.delayCall += RestoreAvatar;
+            Undo.undoRedoPerformed += RefreshCatalog;
         }
 
         private void OnDisable()
@@ -68,6 +70,7 @@ namespace PPTAvatarEditor
             EditorApplication.playModeStateChanged -= PlayStateChanged;
             EditorApplication.update -= Tick;
             EditorApplication.delayCall -= RestoreAvatar;
+            Undo.undoRedoPerformed -= RefreshCatalog;
             DisposePreview();
         }
 
@@ -91,6 +94,7 @@ namespace PPTAvatarEditor
             if (preview != null) { preview.Dispose(); DestroyImmediate(preview); }
             preview = null;
             catalog = null;
+            selectedEntry = null;
         }
 
         public void SelectAvatar(VRCAvatarDescriptor value)
@@ -124,10 +128,46 @@ namespace PPTAvatarEditor
 
         public void ConfirmClip(AnimationClip clip)
         {
-            if (playback == null || clip == null || !catalog.Entries.Any(e => e.Clip == clip)) return;
-            playback.Select(clip);
-            playing = clip.length > .1f;
+            if (catalog == null || clip == null) return;
+            ConfirmEntry(catalog.Entries.FirstOrDefault(e => e.Clip == clip));
+        }
+
+        private void ConfirmEntry(FxViewerCatalog.Entry entry)
+        {
+            if (playback == null || entry?.Clip == null) return;
+            selectedEntry = entry;
+            playback.Select(entry.Clip);
+            playing = entry.Clip.length > .1f;
             lastTick = EditorApplication.timeSinceStartup;
+            Repaint();
+        }
+
+        public bool ReplaceClip(int entryIndex, AnimationClip clip)
+        {
+            if (catalog == null || EditorApplication.isPlayingOrWillChangePlaymode
+                || entryIndex < 0 || entryIndex >= catalog.Entries.Count) return false;
+            var entry = catalog.Entries[entryIndex];
+            if (!catalog.CanAssign(entry)) return false;
+            Undo.IncrementCurrentGroup();
+            catalog.Assign(entry, clip);
+            RefreshCatalog();
+            return true;
+        }
+
+        private void RefreshCatalog()
+        {
+            if (avatar == null || playback == null || PreviewRoot == null) return;
+            var previous = selectedEntry;
+            catalog = new FxViewerCatalog(avatar);
+            layer = Mathf.Clamp(layer, -1, catalog.Layers.Length - 1);
+            selectedEntry = previous == null ? null : catalog.Entries.FirstOrDefault(e =>
+                e.Layer == previous.Layer && e.State == previous.State
+                && e.Tree == previous.Tree && e.ChildIndex == previous.ChildIndex);
+            if (SelectedClip != selectedEntry?.Clip)
+            {
+                playing = false;
+                playback.Select(selectedEntry?.Clip);
+            }
             Repaint();
         }
 
@@ -218,18 +258,22 @@ namespace PPTAvatarEditor
             {
                 var entry = entries[i];
                 var row = new Rect(0, i * 24, width, 22);
-                if (entry.Clip != null && entry.Clip == SelectedClip && Event.current.type == EventType.Repaint)
+                if (entry == selectedEntry && Event.current.type == EventType.Repaint)
                     EditorGUI.DrawRect(row, new Color(.25f, .5f, .8f, .25f));
                 string label = layer < 0 ? catalog.Layers[entry.Layer] + "/" + entry.Label : entry.Label;
                 float nameWidth = width * .4f;
                 GUI.Label(new Rect(1, row.y, nameWidth - 4, 20), new GUIContent(label, label));
-                // Reference fields are read-only in the viewer.
-                using (new EditorGUI.DisabledScope(true))
-                    EditorGUI.ObjectField(new Rect(nameWidth, row.y, width - nameWidth - 60, 20), entry.Clip, typeof(AnimationClip), false);
+                using (new EditorGUI.DisabledScope(!catalog.CanAssign(entry)))
+                {
+                    EditorGUI.BeginChangeCheck();
+                    var clip = (AnimationClip)EditorGUI.ObjectField(new Rect(nameWidth, row.y, width - nameWidth - 60, 20),
+                        entry.Clip, typeof(AnimationClip), false);
+                    if (EditorGUI.EndChangeCheck()) ReplaceClip(catalog.Entries.IndexOf(entry), clip);
+                }
                 var button = new Rect(width - 56, row.y, 56, 20);
                 if (i == 0) FirstConfirmRect = new Rect(viewport.position + button.position - scroll, button.size);
                 using (new EditorGUI.DisabledScope(entry.Clip == null))
-                    if (GUI.Button(button, T("confirmPreview"))) ConfirmClip(entry.Clip);
+                    if (GUI.Button(button, T("confirmPreview"))) ConfirmEntry(entry);
             }
             GUI.EndScrollView();
         }

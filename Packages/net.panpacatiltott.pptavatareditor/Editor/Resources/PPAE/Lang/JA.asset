@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier:
   avatarSettings: "アバター設定"
   confirmPreview: "確認"
+  replaceFxClip: "FXの表情を差し替え"
   playPreview: "再生"
   pausePreview: "一時停止"
   allFxLayers: "すべてのレイヤー"

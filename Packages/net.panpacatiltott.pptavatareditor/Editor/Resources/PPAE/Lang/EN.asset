@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier:
   avatarSettings: "Avatar settings"
   confirmPreview: "Preview"
+  replaceFxClip: "Replace FX clip"
   playPreview: "Play"
   pausePreview: "Pause"
   allFxLayers: "All layers"

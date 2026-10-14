@@ -145,6 +145,7 @@ namespace PPTAvatarEditor
 
         [Header("PPAE Workspace")]
         public string confirmPreview;
+        public string replaceFxClip;
         public string playPreview;
         public string pausePreview;
         public string allFxLayers;

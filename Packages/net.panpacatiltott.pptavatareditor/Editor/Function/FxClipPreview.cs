@@ -12,6 +12,8 @@ namespace PPTAvatarEditor
     {
         private readonly GameObject root;
         private readonly Dictionary<Material, Material> materials = new Dictionary<Material, Material>();
+        private readonly HashSet<EditorCurveBinding> floatBindings = new HashSet<EditorCurveBinding>();
+        private readonly HashSet<EditorCurveBinding> objectBindings = new HashSet<EditorCurveBinding>();
         private AnimationClip defaults, sample;
         public AnimationClip Clip { get; private set; }
         public float Time { get; private set; }
@@ -25,16 +27,27 @@ namespace PPTAvatarEditor
                 foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
                     renderer.sharedMaterials = renderer.sharedMaterials.Select(CloneMaterial).ToArray();
                 defaults = new AnimationClip { name = "PPAE FX preview defaults", hideFlags = HideFlags.HideAndDontSave };
-                var sources = clips.Where(c => c != null).Distinct().ToArray();
-                foreach (var binding in sources.SelectMany(AnimationUtility.GetCurveBindings).Distinct())
-                    if (AnimationUtility.GetFloatValue(root, binding, out float value))
-                        AnimationUtility.SetEditorCurve(defaults, binding, AnimationCurve.Constant(0, 0, value));
-                foreach (var binding in sources.SelectMany(AnimationUtility.GetObjectReferenceCurveBindings).Distinct())
-                    if (AnimationUtility.GetObjectReferenceValue(root, binding, out Object value))
-                        AnimationUtility.SetObjectReferenceCurve(defaults, binding,
-                            new[] { new ObjectReferenceKeyframe { time = 0, value = value } });
+                CaptureDefaults(clips);
             }
             catch { Dispose(); throw; }
+        }
+
+        private void CaptureDefaults(IEnumerable<AnimationClip> clips)
+        {
+            var sources = clips.Where(c => c != null).Distinct().ToArray();
+            foreach (var binding in sources.SelectMany(AnimationUtility.GetCurveBindings).Distinct())
+                if (!floatBindings.Contains(binding) && AnimationUtility.GetFloatValue(root, binding, out float value))
+                {
+                    AnimationUtility.SetEditorCurve(defaults, binding, AnimationCurve.Constant(0, 0, value));
+                    floatBindings.Add(binding);
+                }
+            foreach (var binding in sources.SelectMany(AnimationUtility.GetObjectReferenceCurveBindings).Distinct())
+                if (!objectBindings.Contains(binding) && AnimationUtility.GetObjectReferenceValue(root, binding, out Object value))
+                {
+                    AnimationUtility.SetObjectReferenceCurve(defaults, binding,
+                        new[] { new ObjectReferenceKeyframe { time = 0, value = value } });
+                    objectBindings.Add(binding);
+                }
         }
 
         private Material CloneMaterial(Material source)
@@ -54,6 +67,9 @@ namespace PPTAvatarEditor
             sample = null; Clip = clip;
             if (clip != null)
             {
+                // Capture newly assigned bindings from the restored avatar, not the previous expression.
+                SampleClip(defaults, 0);
+                CaptureDefaults(new[] { clip });
                 sample = Object.Instantiate(clip);
                 sample.hideFlags = HideFlags.HideAndDontSave;
                 sample.events = new AnimationEvent[0];
@@ -72,8 +88,25 @@ namespace PPTAvatarEditor
         {
             if (root == null) return;
             Time = Clip != null ? Mathf.Clamp(time, 0, Clip.length) : 0;
-            defaults.SampleAnimation(root, 0);
-            if (sample != null) sample.SampleAnimation(root, Time);
+            SampleClip(defaults, 0);
+            if (sample != null) SampleClip(sample, Time);
+        }
+
+        private void SampleClip(AnimationClip clip, float time)
+        {
+            var animator = root.GetComponent<Animator>();
+            var avatar = animator != null ? animator.avatar : null;
+            bool propertyOnly = avatar != null && avatar.isHuman && !clip.humanMotion;
+            try
+            {
+                // Sample FX properties without making Mecanim reset the clone's Humanoid body pose.
+                if (propertyOnly) animator.avatar = null;
+                clip.SampleAnimation(root, time);
+            }
+            finally
+            {
+                if (propertyOnly && animator != null) animator.avatar = avatar;
+            }
         }
 
         public void Dispose()

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier:
   avatarSettings: "아바타 설정"
   confirmPreview: "확인"
+  replaceFxClip: "FX 클립 교체"
   playPreview: "재생"
   pausePreview: "일시 정지"
   allFxLayers: "모든 레이어"
