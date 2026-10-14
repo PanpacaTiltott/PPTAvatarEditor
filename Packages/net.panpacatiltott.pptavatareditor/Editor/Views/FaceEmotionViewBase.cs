@@ -28,7 +28,6 @@ namespace PPTAvatarEditor.Base
         private Vector2 saveOptionsScroll;
         private string search = string.Empty;
         private int category;
-        private bool nonzeroOnly;
         private bool showSaveOptions = true;
         private BlendShapeCategories categories;
         private SkinnedMesh categoryMesh;
@@ -93,13 +92,6 @@ namespace PPTAvatarEditor.Base
                         if (GUILayout.Button(new GUIContent(Text.redoPreview, Text.redoHint + ": " + history.RedoLabel),
                             EditorStyles.toolbarButton, GUILayout.Width(64))) RedoPreviewEdit();
                     search = EditorGUILayout.TextField(search, EditorStyles.toolbarSearchField);
-                    if (GUILayout.Button(new GUIContent("×", Text.clearSearch), EditorStyles.toolbarButton, GUILayout.Width(24)))
-                    {
-                        search = string.Empty;
-                        GUI.FocusControl(null);
-                    }
-                    nonzeroOnly = GUILayout.Toggle(nonzeroOnly, new GUIContent(Text.nonzeroOnly, Text.nonzeroHint),
-                        EditorStyles.toolbarButton, GUILayout.Width(66));
                 }
                 var categoryHeight = DrawCategories();
 
@@ -363,7 +355,6 @@ namespace PPTAvatarEditor.Base
         {
             if (shape.IsExclusion) return false;
             if (mesh == categoryMesh && categories != null && !categories.Contains(category, shape)) return false;
-            if (nonzeroOnly && Mathf.Abs(mesh.Renderer.GetBlendShapeWeight(shape.Id)) < 0.001f) return false;
             if (string.IsNullOrWhiteSpace(search)) return true;
             return search.Split(new[] { ' ', '\u3000' }, StringSplitOptions.RemoveEmptyEntries)
                 .All(term => shape.Name.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0);

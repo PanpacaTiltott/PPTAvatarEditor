@@ -150,9 +150,6 @@ namespace PPTAvatarEditor
         public string redoPreview;
         public string undoHint;
         public string redoHint;
-        public string clearSearch;
-        public string nonzeroOnly;
-        public string nonzeroHint;
         public string clipName;
         public string saveOptions;
         public string assetsFolderOnly;
