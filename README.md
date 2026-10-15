@@ -2,6 +2,8 @@
 
 VRChatアバターの表情編集を中心に、[VRCAvatarEditor 0.8.0](https://github.com/gatosyocora/VRCAvatarEditor) を改変したUnityエディタ拡張です。
 
+追加機能は、アバターに必要なものを独立したPrefabとして加えるモジュール方式を基本方針とします。バージョンはSemVer 2.0に従います。[設計・互換性・バージョン方針](DESIGN.md)と[変更履歴](CHANGELOG.md)を参照してください。
+
 ## インストール
 
 **[VCCに追加](https://panpacatiltott.github.io/PPTAvatarEditor/)**
@@ -25,6 +27,8 @@ https://panpacatiltott.github.io/PPTAvatarEditor/index.json
 
 ## 追加機能
 
+- **表情呼び出し（開発版0.1.0）** — 「PPAE → Expression Menu」で、表情を選んで固定できるMA対応Prefabを生成。固定中は口パク・まばたき・自動視線を停止し、解除時に通常の制御へ戻します。既存のFX・メニュー・Parametersのアセットを置き換えず、追加レイヤーとして統合します。
+
 - **FX Viewer** — 「PPAE → FX Viewer」から表情を確認・差し替えできます。クリップ欄へのドラッグ＆ドロップや選択でFXの割り当てを変更し、「確認」で再生します。差し替えはUndo / Redoに対応し、Blend Tree内のクリップやOverride Controllerも扱えます。
 - **シェイプキーのUndo / Redo** — 値の調整、保存チェック、クリップの読み込み、リセットを戻したりやり直したりできます。
 - **Bodyの見出しからカテゴリを生成** — `---EYE---` など、アバターに付いた区切り名で分類。「未分類」は末尾に表示します。
@@ -34,7 +38,13 @@ https://panpacatiltott.github.io/PPTAvatarEditor/index.json
 
 ## 動作環境
 
+表情呼び出しPrefabの生成にはModular Avatar 1.12以上、2.0未満が必要です。通常のエディタとFX Viewerには不要です。
+アバターとクリップを選び、「Prefabを生成」「アバターに追加」の順で操作します。初期保存先は `Assets/PPAE/アバター名/ExpressionMenus/`。
+選択クリップの対象メッシュ内の未記録シェイプキーは、生成時の値で補完します。既存の `.anim` 保存の仕様は維持しています。
+
 Unity 2022.3.22f1、VRChat SDK3 Avatarsで動作確認しています。
+
+表情呼び出しの自動試験と実機未確認の範囲は [検証記録](MODULE_VERIFICATION.md) に記載しています。
 
 ## クレジット・ライセンス
 

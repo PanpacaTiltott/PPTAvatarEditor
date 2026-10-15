@@ -58,7 +58,11 @@ def prior_versions(history, repository):
 def build(output, repository, history):
     manifest = json.loads((PACKAGE_ROOT / "package.json").read_text(encoding="utf-8-sig"))
     version = manifest["version"]
-    if not re.fullmatch(r"\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?", version):
+    number = r"(?:0|[1-9][0-9]*)"
+    prerelease = r"(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)"
+    semver = number + r"\." + number + r"\." + number
+    semver += r"(?:-" + prerelease + r"(?:\." + prerelease + r")*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?"
+    if not re.fullmatch(semver, version):
         raise ValueError("Invalid package version")
     if manifest["name"] != PACKAGE or manifest["displayName"] != "PPTAvatarEditor":
         raise ValueError("Incorrect package identity")

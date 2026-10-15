@@ -1,4 +1,4 @@
-PPTAvatarEditor 0.0.1
+PPTAvatarEditor 0.1.0
 
 VRChatアバターの表情を編集し、アニメーションクリップに保存。
 
@@ -13,6 +13,21 @@ FX一覧の高さはプレビューとの境界のドラッグで調整できま
 
 GitHub https://github.com/PanpacaTiltott/PPTAvatarEditor
 連絡先 @PanpacaTiltott
+
+表情呼び出し
+Modular Avatar 1.12以上、2.0未満を導入すると「PPAE / Expression Menu」を使用できます。
+アバターと表情クリップを選び「Prefabを生成」「アバターに追加」で設定します。
+初期保存先は Assets/PPAE/アバター名/ExpressionMenus/ です。
+メニューで選んだ表情を固定し、「解除」か選択項目のOFFで戻します。
+固定中は口パク・まばたき・自動視線を停止します。
+入力はシェイプキーのみのクリップです。対象メッシュの未記録キーは生成時の値で補完します。
+既存FX・メニュー・Parametersを保持し、追加Prefabを外すと元の構成になります。
+1アバターに1つの表情呼び出しPrefabを使用してください。
+
+設計方針
+追加機能は独立したモジュールとして導入できる形を基本とします。
+バージョンはSemantic Versioning 2.0.0のMajor.Minor.Patchに従います。
+詳細 https://github.com/PanpacaTiltott/PPTAvatarEditor/blob/master/DESIGN.md
 
 PPTAvatarEditor は VRCAvatarEditor 0.8.0 の改変版です。
 原作者 gatosyocora ／ 改変 PanpacaTiltott
