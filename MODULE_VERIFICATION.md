@@ -1,6 +1,6 @@
 # 表情呼び出しモジュールの検証
 
-対象は開発版0.3.0。Unity 2022.3.22f1、Modular Avatar 1.18.7、NDMF 1.14.8、VRChat SDK3 Avatarsで検証しました。
+対象は0.3.0。Unity 2022.3.22f1、Modular Avatar 1.18.7、NDMF 1.14.8、VRChat SDK3 Avatarsで検証しました。
 同じ検証コードをフォーク版とStandalone版に対して実行しています。
 
 ## Play Mode
