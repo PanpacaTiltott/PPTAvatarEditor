@@ -61,7 +61,7 @@ MonoBehaviour:
   infoEditingGuide: "아바타를 선택하면 표정 편집기가 열립니다. 카테고리는 Body 메시의 ---EYE--- 같은 구분 이름으로 만들어집니다. 다른 메시는 펼쳐서 편집할 수 있습니다."
   infoFxGuide: "왼쪽 아래에서 FX 레이어를 선택한 뒤 편집을 눌러 클립을 미리보기에 불러옵니다."
   infoHistoryGuide: "Ctrl+Z로 실행 취소, Ctrl+Y / Ctrl+Shift+Z로 다시 실행합니다. Mac에서는 Command 키를 사용합니다. 텍스트 입력 중에는 입력 필드의 단축키가 우선합니다."
-  infoSavingGuide: "모든 메시의 항목은 처음부터 체크되어 있습니다. 펼쳐진 메시에서 체크되고 제외 설정에 해당하지 않는 항목만 .anim으로 저장합니다. 접힌 메시는 저장하지 않습니다. 기본 폴더는 Assets/PPAE/<아바타 이름>/입니다. 아래 저장 설정에서 위치와 FX 할당을 변경할 수 있습니다."
+  infoSavingGuide: "모든 메시의 항목은 처음부터 체크되어 있습니다. 펼쳐진 메시에서 체크되고 제외 설정에 해당하지 않는 항목만 .anim으로 저장합니다. 접힌 메시는 저장하지 않습니다. 기본 폴더는 Assets/PPAE/<아바타 이름>/Animation/입니다. 아래 저장 설정에서 위치와 FX 할당을 변경할 수 있습니다."
   infoContact: "개발 / 연락처"
   openContact: "X 열기"
   sourceCode: "GitHub"

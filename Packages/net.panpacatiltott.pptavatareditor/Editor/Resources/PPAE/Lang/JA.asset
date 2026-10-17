@@ -61,7 +61,7 @@ MonoBehaviour:
   infoEditingGuide: "アバターを選ぶと表情編集が開きます。カテゴリは Body メッシュ内の ---EYE--- などの区切り名から作られます。Body 以外のメッシュは、折りたたみを開いて編集できます。"
   infoFxGuide: "左下の FX レイヤーを選び、クリップの「編集」を押すと、その表情をプレビューへ読み込みます。"
   infoHistoryGuide: "Ctrl+Z で元に戻し、Ctrl+Y / Ctrl+Shift+Z でやり直します。Mac は Command キーを使います。文字入力中は入力欄の操作が優先されます。"
-  infoSavingGuide: "チェックは全メッシュで最初から ON です。展開中のメッシュのチェック済み・除外対象外の項目を .anim に保存します。閉じたメッシュは保存されません。初期保存先は Assets/PPAE/アバター名/ です。下部の保存設定から保存先や FX の割り当てを変更できます。"
+  infoSavingGuide: "チェックは全メッシュで最初から ON です。展開中のメッシュのチェック済み・除外対象外の項目を .anim に保存します。閉じたメッシュは保存されません。初期保存先は Assets/PPAE/アバター名/Animation/ です。下部の保存設定から保存先や FX の割り当てを変更できます。"
   infoContact: "開発・連絡先"
   openContact: "X を開く"
   sourceCode: "GitHub"

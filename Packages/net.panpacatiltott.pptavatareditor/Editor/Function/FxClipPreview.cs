@@ -72,7 +72,7 @@ namespace PPTAvatarEditor
                 CaptureDefaults(new[] { clip });
                 sample = Object.Instantiate(clip);
                 sample.hideFlags = HideFlags.HideAndDontSave;
-                sample.events = new AnimationEvent[0];
+                AnimationUtility.SetAnimationEvents(sample, new AnimationEvent[0]);
                 foreach (var binding in AnimationUtility.GetObjectReferenceCurveBindings(sample))
                 {
                     var keys = AnimationUtility.GetObjectReferenceCurve(sample, binding);

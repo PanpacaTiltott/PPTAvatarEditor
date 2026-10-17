@@ -198,6 +198,9 @@ namespace PPTAvatarEditor
                 if (EditorGUI.EndChangeCheck()) SelectAvatar(chosen);
                 using (new EditorGUI.DisabledScope(avatar == null))
                     if (GUILayout.Button(T("reload"), EditorStyles.toolbarButton)) SelectAvatar(avatar);
+                using (new EditorGUI.DisabledScope(avatar == null || SelectedClip == null))
+                    if (GUILayout.Button(ClipCaptureWindow.CaptureLabel, EditorStyles.toolbarButton))
+                        ClipCaptureWindow.OpenFor(avatar, SelectedClip, PreviewTime);
             }
             if (PreviewRoot == null)
             {

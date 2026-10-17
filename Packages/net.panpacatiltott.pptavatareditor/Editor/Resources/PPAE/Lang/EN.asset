@@ -61,7 +61,7 @@ MonoBehaviour:
   infoEditingGuide: "Selecting an avatar opens the expression editor. Categories come from headings such as ---EYE--- in the Body mesh. Expand other meshes to edit their shapes."
   infoFxGuide: "Select an FX layer at the lower left, then use Edit to load a clip into the preview."
   infoHistoryGuide: "Use Ctrl+Z to undo and Ctrl+Y / Ctrl+Shift+Z to redo (Command on Mac). Text fields keep their own editing shortcuts."
-  infoSavingGuide: "All meshes start with their shapes checked. Only checked, non-excluded shapes in expanded meshes are saved to a .anim clip. Collapsed meshes are not saved. The default folder is Assets/PPAE/<avatar name>/. Change the destination or FX assignment in the save options below."
+  infoSavingGuide: "All meshes start with their shapes checked. Only checked, non-excluded shapes in expanded meshes are saved to a .anim clip. Collapsed meshes are not saved. The default folder is Assets/PPAE/<avatar name>/Animation/. Change the destination or FX assignment in the save options below."
   infoContact: "Developer / Contact"
   openContact: "Open X"
   sourceCode: "GitHub"

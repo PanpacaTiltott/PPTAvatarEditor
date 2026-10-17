@@ -16,7 +16,7 @@ namespace PPTAvatarEditor.Utilities
             if (stem == "CON" || stem == "PRN" || stem == "AUX" || stem == "NUL"
                 || (stem.Length == 4 && (stem.StartsWith("COM") || stem.StartsWith("LPT"))
                     && stem[3] >= '1' && stem[3] <= '9')) name = "_" + name;
-            return "Assets/PPAE/" + name + "/";
+            return "Assets/PPAE/" + name + "/Animation/";
         }
 
         internal static string EnsureFolder(string folder)
