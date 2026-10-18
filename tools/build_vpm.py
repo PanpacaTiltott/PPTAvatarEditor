@@ -139,7 +139,7 @@ def build(output, repository, history):
     website = output / "website"
     website.mkdir(exist_ok=True)
     listing = {
-        "name": "PPTAvatarEditor",
+        "name": "PanpacaTiltott",
         "id": "net.panpacatiltott.pptavatareditor.repository",
         "author": "PanpacaTiltott",
         "url": listing_url,
