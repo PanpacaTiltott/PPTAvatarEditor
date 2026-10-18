@@ -295,6 +295,7 @@ public static class VerifyClipCapture
                     && string.IsNullOrEmpty((string)type.GetField("error", Private).GetValue(window))
                     && string.IsNullOrEmpty((string)type.GetField("previewError", Private).GetValue(window)),
                     "menu preview renders the selected expression without UI errors at " + size);
+                VerifyTimeline(window, entry, "Time", first, "menu at " + size);
                 var fovRect = (Rect)type.GetProperty("FieldOfViewRect").GetValue(window);
                 Check(fovRect.width > 150 && fovRect.yMin > previewRect.yMax && fovRect.yMax < size.y - 40,
                     "Menu field-of-view control fits below the preview at " + size);
@@ -407,9 +408,60 @@ public static class VerifyClipCapture
                 window.SendEvent(new Event { type = EventType.MouseUp, button = 0, mousePosition = firstRect.center });
                 Check((AnimationClip)type.GetProperty("SelectedClip").GetValue(window) == clips[0],
                     "clicking the visible capture row changes the selected clip at " + size);
+                VerifyTimeline(window, settings, "SampleTime", clips[0], "capture at " + size);
             }
+            var longer = new AnimationClip { name = "Four-second timeline" };
+            longer.SetCurve("Body", typeof(SkinnedMeshRenderer), "blendShape.Expression", AnimationCurve.Linear(0, 0, 4, 100));
+            try
+            {
+                type.GetMethod("AddClips").Invoke(window, new object[] { new[] { longer } });
+                VerifyTimeline(window, settings, "SampleTime", longer, "four-second capture");
+            }
+            finally { Object.DestroyImmediate(longer); }
+            var empty = new AnimationClip { name = "Zero-length timeline" };
+            empty.SetCurve("Body", typeof(SkinnedMeshRenderer), "blendShape.Expression", new AnimationCurve(new Keyframe(0, 0)));
+            try
+            {
+                type.GetMethod("AddClips").Invoke(window, new object[] { new[] { empty } });
+                window.SendEvent(new Event { type = EventType.Layout });
+                window.SendEvent(new Event { type = EventType.Repaint });
+                var track = (Rect)type.GetProperty("SamplePositionRect").GetValue(window);
+                window.SendEvent(new Event { type = EventType.MouseDown, button = 0, mousePosition = track.center });
+                window.SendEvent(new Event { type = EventType.MouseDrag, button = 0, mousePosition = new Vector2(track.xMax + 10, track.center.y) });
+                window.SendEvent(new Event { type = EventType.MouseUp, button = 0, mousePosition = new Vector2(track.xMax + 10, track.center.y) });
+                Check(empty.length == 0 && (float)Get(settings, "SampleTime") == 0,
+                    "zero-length clips keep the capture timeline at the start (length=" + empty.length + ", time=" + Get(settings, "SampleTime") + ")");
+            }
+            finally { Object.DestroyImmediate(empty); }
         }
         finally { window.Close(); }
+    }
+
+    private static void VerifyTimeline(EditorWindow window, object target, string timeField, AnimationClip clip, string label)
+    {
+        var type = window.GetType();
+        foreach (float fraction in new[] { 0f, 1f, .5f })
+        {
+            Set(target, timeField, clip.length * .5f);
+            type.GetField("dirty", Private).SetValue(window, true);
+            window.SendEvent(new Event { type = EventType.Layout });
+            window.SendEvent(new Event { type = EventType.Repaint });
+            var track = (Rect)type.GetProperty("SamplePositionRect").GetValue(window);
+            var destination = new Vector2(Mathf.Lerp(track.x - 10, track.xMax + 10, fraction), track.center.y);
+            window.SendEvent(new Event { type = EventType.MouseDown, button = 0, mousePosition = track.center });
+            window.SendEvent(new Event { type = EventType.MouseDrag, button = 0, mousePosition = new Vector2(track.xMax + 10, track.center.y) });
+            window.SendEvent(new Event { type = EventType.MouseDrag, button = 0, mousePosition = destination });
+            window.SendEvent(new Event { type = EventType.MouseUp, button = 0, mousePosition = destination });
+            window.SendEvent(new Event { type = EventType.Layout });
+            window.SendEvent(new Event { type = EventType.Repaint });
+            float sampled = (float)Get(target, timeField);
+            Check(track.width > 60 && Mathf.Abs(sampled - clip.length * fraction) < .005f,
+                label + " timeline drag reaches " + fraction + " of the clip");
+            var session = type.GetField("session", Private).GetValue(window);
+            var clone = (GameObject)session.GetType().GetProperty("Clone").GetValue(session);
+            float weight = clone.transform.Find("Body").GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(0);
+            Check(Mathf.Abs(weight - fraction * 100) < .5f, label + " timeline updates the actual preview pose at " + fraction);
+        }
     }
 
     private static void VerifyActual(Type sessionType, Type settingsType, string ns)

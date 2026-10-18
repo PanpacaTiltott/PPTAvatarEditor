@@ -28,6 +28,7 @@ namespace PPTAvatarEditor
         public Rect ClipListRect { get; private set; }
         public Rect FirstClipRect { get; private set; }
         public Rect CaptureButtonsRect { get; private set; }
+        public Rect SamplePositionRect { get; private set; }
         public int LastAddedCount { get; private set; }
         private static int Language { get { var code = EditorSetting.instance.Data.language ?? "JA"; return code.StartsWith("en", StringComparison.OrdinalIgnoreCase) ? 1 : code.StartsWith("ko", StringComparison.OrdinalIgnoreCase) ? 2 : 0; } }
         private static string L(string ja, string en, string ko) => Language == 1 ? en : Language == 2 ? ko : ja;
@@ -227,7 +228,11 @@ namespace PPTAvatarEditor
             }
             HandleDrop(listRect);
             EditorGUI.BeginChangeCheck();
-            settings.SampleTime = Mathf.Max(0, EditorGUILayout.FloatField(L("撮影時刻（秒）", "Sample time (s)", "촬영 시점 (초)"), settings.SampleTime));
+            float sampleTime = DrawSamplePosition(L("撮影位置", "Capture position", "촬영 위치"), SelectedClip,
+                settings.SampleTime, out Rect samplePositionRect);
+            if (sampleTime != settings.SampleTime) { settings.SampleTime = sampleTime; dirty = true; Repaint(); }
+            if (Event.current.type == EventType.Repaint)
+                SamplePositionRect = new Rect(GUIUtility.GUIToScreenPoint(samplePositionRect.position) - position.position, samplePositionRect.size);
             using (new EditorGUILayout.HorizontalScope())
             {
                 EditorGUILayout.PrefixLabel(L("PNGサイズ", "PNG size", "PNG 크기"));
@@ -266,6 +271,25 @@ namespace PPTAvatarEditor
             if (!string.IsNullOrEmpty(error)) EditorGUILayout.HelpBox(error, MessageType.Error);
             if (!string.IsNullOrEmpty(lastPath) && GUILayout.Button(L("保存した画像を表示", "Show saved image", "저장한 이미지 표시")))
             { Selection.activeObject = AssetDatabase.LoadAssetAtPath<Texture2D>(lastPath); EditorGUIUtility.PingObject(Selection.activeObject); }
+        }
+
+        public static float DrawSamplePosition(string label, AnimationClip clip, float time, out Rect sliderRect)
+        {
+            Rect rect = EditorGUI.PrefixLabel(EditorGUILayout.GetControlRect(), new GUIContent(label));
+            string start = L("始点", "Start", "시작"), end = L("終端", "End", "끝");
+            float startWidth = EditorStyles.miniLabel.CalcSize(new GUIContent(start)).x + 6;
+            float endWidth = EditorStyles.miniLabel.CalcSize(new GUIContent(end)).x + 6;
+            sliderRect = new Rect(rect.x + startWidth, rect.y, Mathf.Max(1, rect.width - startWidth - endWidth), rect.height);
+            float length = clip != null ? Mathf.Max(0, clip.length) : 0;
+            using (new EditorGUI.DisabledScope(length <= 0))
+            {
+                EditorGUI.LabelField(new Rect(rect.x, rect.y, startWidth, rect.height), start, EditorStyles.miniLabel);
+                EditorGUI.LabelField(new Rect(sliderRect.xMax + 6, rect.y, endWidth - 6, rect.height), end, EditorStyles.miniLabel);
+                float clampedTime = Mathf.Clamp(time, 0, length);
+                float progress = length > 0 ? clampedTime / length : 0;
+                float next = GUI.HorizontalSlider(sliderRect, progress, 0, 1);
+                return next == progress ? clampedTime : next * length;
+            }
         }
 
         private void ShowFxMenu()

@@ -34,6 +34,7 @@ namespace PPTAvatarEditor.Modules
         public Rect PreviewRect { get; private set; }
         public Rect FirstConfirmRect { get; private set; }
         public Rect FieldOfViewRect { get; private set; }
+        public Rect SamplePositionRect { get; private set; }
         public Rect TreeViewportRect { get; private set; }
         public AnimationClip SelectedClip => selected >= 0 && selected < entries.Count ? entries[selected].Clip : null;
         public ExpressionMenuResult GeneratedResult { get; private set; }
@@ -454,12 +455,14 @@ namespace PPTAvatarEditor.Modules
                         RegisterRow(TreeKind.Clip, entry.Id, row.rect, handle);
                         HandleTreeDrop(row.rect, TreeKind.Clip, entry.Id);
                     }
-                    if (entry.Clip != null && selected == entries.IndexOf(entry) && entry.Clip.length > 1f / 30f)
+                    if (entry.Clip != null && selected == entries.IndexOf(entry))
                     {
                         float oldWidth = EditorGUIUtility.labelWidth;
-                        EditorGUIUtility.labelWidth = Language == 1 ? 88 : 68;
-                        float time = EditorGUILayout.Slider(L("固定する時間", "Sample time", "고정 시점"), entry.Time, 0, entry.Clip.length);
-                        if (time != entry.Time) { RecordChange(); entry.Time = time; dirty = true; }
+                        EditorGUIUtility.labelWidth = Language == 1 ? 104 : 68;
+                        float time = ClipCaptureWindow.DrawSamplePosition(L("固定位置", "Hold position", "고정 위치"),
+                            entry.Clip, entry.Time, out Rect samplePositionRect);
+                        if (time != entry.Time) { RecordChange(); entry.Time = time; dirty = true; Repaint(); }
+                        if (Event.current.type == EventType.Repaint) SamplePositionRect = LocalWindowRect(samplePositionRect);
                         EditorGUIUtility.labelWidth = oldWidth;
                     }
                 }
